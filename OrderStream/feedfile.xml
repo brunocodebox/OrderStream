@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright Bruno Kieba - 2018
+-->
+<task1>
+	<tradeplot>
+		<console>
+      <output>false</output>
+			<diff>TSTJ_DIFF.log</diff>
+		</console>
+		<file>tradebar.htm</file>
+    
+		<markers>
+      <begin_csv_variation>begin_h2_p_csv</begin_csv_variation>
+      <end_csv_variation>end_h2_p_csv</end_csv_variation>
+      
+      <begin_log_variation>begin_h2_p_log</begin_log_variation>
+      <end_log_variation>end_h2_p_log</end_log_variation>
+      
+			<begin_stackbar_csv_data_array>begin stackbar csv data array</begin_stackbar_csv_data_array>
+			<end_stackbar_csv_data_array>end stackbar csv data array</end_stackbar_csv_data_array>
+			
+			<begin_stackbar_log_data_array>begin stackbar log data array</begin_stackbar_log_data_array>
+			<end_stackbar_log_data_array>end stackbar log data array</end_stackbar_log_data_array>
+			
+			<begin_chart_order_diff_data_array>begin chart order diff data array</begin_chart_order_diff_data_array>
+			<end_chart_order_diff_data_array>end chart order diff data array</end_chart_order_diff_data_array>			
+
+			<begin_bar_size_data_array>begin bar size data array</begin_bar_size_data_array>
+			<end_bar_size_data_array>end bar size data array</end_bar_size_data_array>
+
+			<begin_spread_data_array>begin spread data array</begin_spread_data_array>
+			<end_spread_data_array>end spread data array</end_spread_data_array>
+
+			<begin_pie_bid_data_array>begin pie csv data array</begin_pie_bid_data_array>
+			<end_pie_bid_data_array>end pie csv data array</end_pie_bid_data_array>
+
+			<begin_pie_ask_data_array>begin pie log data array</begin_pie_ask_data_array>
+			<end_pie_ask_data_array>end pie log data array</end_pie_ask_data_array>
+
+			<begin_pie_diff_data_array>begin pie diff data array</begin_pie_diff_data_array>
+			<end_pie_diff_data_array>end pie diff data array</end_pie_diff_data_array>
+			
+			<begin_chart_options>begin chart options</begin_chart_options>
+			<end_chart_options>end chart options</end_chart_options>
+		</markers>
+	</tradeplot>
+
+	<sessionfeed>
+		<sourcefeed>feed1</sourcefeed>
+		<maxBookLevels>5</maxBookLevels>
+		<maxBookDepth>5</maxBookDepth>
+		<feed1>
+			<csv>TSTJ.csv</csv>
+			<log>TSTJ.log</log>
+		</feed1>
+		<feed2>
+			<csv>HWKJ.csv</csv>
+			<log>HWKJ.log</log>
+			<diff>HWKJ_DIFF.log</diff>
+		</feed2>
+	</sessionfeed>
+</task1>
