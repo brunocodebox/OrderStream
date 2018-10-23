@@ -3,4 +3,5 @@
   - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
   - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
   Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
+  LINK : C:\Users\kiebab\Documents\Visual Studio 2017\Projects\OrderStream\Debug\OrderStream.exe not found or not built by the last incremental link; performing full link
   OrderStream.vcxproj -> C:\Users\kiebab\Documents\Visual Studio 2017\Projects\OrderStream\Debug\OrderStream.exe
