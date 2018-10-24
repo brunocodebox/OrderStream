@@ -63,6 +63,20 @@ public:
 	OBStreamCSV(const string& szFile, int& nMaxBookLevels, int& nMaxBookDepth) : OBStream(szFile, nMaxBookLevels, nMaxBookDepth) {}
 
 	void processFeeds();
+
+	enum FEED_ROW_ID {	CSVFEED_INSTRUMENT=0, 
+						CSVFEED_DATETIME, 
+						CSVFEED_FLAGS,
+						CSVFEED_VOLUMEACC,
+						CSVFEED_STATUS,
+						CSVFEED_LATEST_PRICE,
+						CSVFEED_LATEST_SIZE,
+						CSVFEED_ASK_PRICE=7, 
+						CSVFEED_ASK_SIZE, 
+						CSVFEED_BID_PRICE, 
+						CSVFEED_BID_SIZE, 
+						CSVFEED_BID_LEVELS, 
+						CSVFEED_ASK_LEVELS };
 };
 
 class OBStreamLog : public OBStream {
