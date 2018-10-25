@@ -45,6 +45,7 @@ public:
 	boost::shared_ptr<OrderBook> getOrderBook()	{ return m_pOrderBook; }
 
 	virtual void processFeeds() = 0;
+
 	void buildOrderBook();
 	void addPriceSizeLevels(vector<pairPriceSize>& vp, const string& szLevel, const regex& re);
 	//void buildIndexSizeChange(mapRowSize& mrs, vector<int>& vs);
@@ -64,19 +65,20 @@ public:
 
 	void processFeeds();
 
-	enum FEED_ROW_ID {	CSVFEED_INSTRUMENT=0, 
-						CSVFEED_DATETIME, 
-						CSVFEED_FLAGS,
-						CSVFEED_VOLUMEACC,
-						CSVFEED_STATUS,
-						CSVFEED_LATEST_PRICE,
-						CSVFEED_LATEST_SIZE,
-						CSVFEED_ASK_PRICE=7, 
-						CSVFEED_ASK_SIZE, 
-						CSVFEED_BID_PRICE, 
-						CSVFEED_BID_SIZE, 
-						CSVFEED_BID_LEVELS, 
-						CSVFEED_ASK_LEVELS };
+	enum CSVFEED_ROW_ID {	
+		CSVFEED_INSTRUMENT=0, 
+		CSVFEED_DATETIME, 
+		CSVFEED_FLAGS,
+		CSVFEED_VOLUMEACC,
+		CSVFEED_STATUS,
+		CSVFEED_LATEST_PRICE,
+		CSVFEED_LATEST_SIZE,
+		CSVFEED_ASK_PRICE=7, 
+		CSVFEED_ASK_SIZE, 
+		CSVFEED_BID_PRICE, 
+		CSVFEED_BID_SIZE, 
+		CSVFEED_BID_LEVELS, 
+		CSVFEED_ASK_LEVELS };
 };
 
 class OBStreamLog : public OBStream {
@@ -85,6 +87,16 @@ public:
 	OBStreamLog(const string& szFile, int& nMaxBookLevels, int& nMaxBookDepth) : OBStream(szFile, nMaxBookLevels, nMaxBookDepth) {}
 
 	void processFeeds();
+
+	enum LOGFEED_ROW_ID {
+		LOGFEED_INSTRUMENT = 0,
+		LOGFEED_STATUS,
+		LOGFEED_DATA_QUALITY,
+		LOGFEED_BID_PRICESIZE,
+		LOGFEED_ASK_PRICESIZE,
+		LOGFEED_BID_BOOK,
+		LOGFEED_ASK_BOOK
+	};
 };
 
 
