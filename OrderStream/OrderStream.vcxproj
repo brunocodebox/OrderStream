@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="TracedException.hpp" />
     <ClInclude Include="OrderBook.hpp" />
     <ClInclude Include="OrderStream.hpp" />
     <ClInclude Include="pch.h" />

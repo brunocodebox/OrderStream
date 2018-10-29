@@ -27,6 +27,9 @@
     <ClInclude Include="OrderBook.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TracedException.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

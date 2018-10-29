@@ -23,7 +23,6 @@
 using namespace std;
 using namespace boost;
 
-#include "OrderBook.hpp"
 #include "OrderStream.hpp"
 #include "TradePlot.hpp"
 
@@ -31,7 +30,7 @@ const string szSessionFeed("task1.sessionfeed.");
 
 int main(int argc, char *argv[])
 {
-	// Check that we have the expected argument. Example command expected is: "OrderStream feed1"
+	// Check that we have the expected argument in input command. Example command expected is: "OrderStream feed1"
 	if (argc < 2) {
 		std::cout << "Not enough or invalid arguments, please try again. Usage is prog.exe -in <infile>\n";
 		Sleep(2000);
@@ -70,9 +69,20 @@ int main(int argc, char *argv[])
 	ths.create_thread(boost::bind(&OBStreamLog::processFeeds, boost::ref(obsLog)));
 	ths.join_all();
 
-	// Plot the result to html and console optionally
-	TradePlot tp(szXml, obsCsv, obsLog);
+	try {
+		// Check whether exception was caught while processing feeds
+		obsCsv.CheckNotifyException();
+		obsLog.CheckNotifyException();
 
+		// There was no exception. Plot the result to html and console optionally
+		TradePlot tp(szXml, obsCsv, obsLog);
+	}
+	catch (const TracedException& te) {
+		te.coutException();
+		cout << "Plot of source feeds difference was not generated." << endl;
+	}
+
+	cout << " Thread Id Main:" << boost::this_thread::get_id() << endl;
 	// Exit normally
 	return (0);
 }
