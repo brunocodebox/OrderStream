@@ -27,6 +27,8 @@ public:
 	TradePlot() = delete;
 	explicit TradePlot(const string& szXmlFile, OBStreamCSV& obsCsv, OBStreamLog& obsLog);
 
+	const string& getPlotFile() const { return m_szPlotFile; }
+
 private:
 	void	plotOrderBook(mapOffers& moBid, mapOffers& moAsk, InjectParams& ijParams);
 	void	plotOrderDiff(mapOffers& moCsvBid, mapOffers& moLogBid, mapOffers& moCsvAsk, mapOffers& moLogAsk, InjectParams& ijParams);
@@ -41,6 +43,7 @@ private:
 	void	injectHtml(const InjectParams& ijParams, const vstring& vs);
 
 private:
+	string	m_szPlotFile;
 	string	m_szConsoleLog;
 	bool	m_bConsoleOut;
 

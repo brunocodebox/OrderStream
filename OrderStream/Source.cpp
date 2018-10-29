@@ -76,13 +76,15 @@ int main(int argc, char *argv[])
 
 		// There was no exception. Plot the result to html and console optionally
 		TradePlot tp(szXml, obsCsv, obsLog);
+
+		cout << " Plot of source feeds have been generated in webpage file " << tp.getPlotFile() << endl;
+		cout << " Note: " << tp.getPlotFile() << " includes Google Charts to show source feeds differences and should be open with Chrome." << endl;
 	}
 	catch (const TracedException& te) {
 		te.coutException();
 		cout << "Plot of source feeds difference was not generated." << endl;
 	}
 
-	cout << " Thread Id Main:" << boost::this_thread::get_id() << endl;
 	// Exit normally
 	return (0);
 }

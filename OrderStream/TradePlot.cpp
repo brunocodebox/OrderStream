@@ -55,6 +55,7 @@ TradePlot::TradePlot(const string& szXml, OBStreamCSV& obsCsv, OBStreamLog& obsL
 
 	m_bConsoleOut	= pt.get<bool>(szTradePlot   + "console.output", false);
 	m_szConsoleLog	= pt.get<string>(szTradePlot + "console.diff", "feeddiff.log");
+	m_szPlotFile	= pt.get<string>(szTradePlot + "file", "tradebar.htm");
 
 	// Console out if needed
 	if (m_bConsoleOut) {
@@ -64,7 +65,7 @@ TradePlot::TradePlot(const string& szXml, OBStreamCSV& obsCsv, OBStreamLog& obsL
 	InjectParams ijParams;
 	ijParams.szInstrCsv = m_pCsvBook->szInstrument;
 	ijParams.szInstrLog = m_pLogBook->szInstrument;
-	ijParams.szHtml = pt.get<string>(szTradePlot + "file", "");
+	ijParams.szHtml = m_szPlotFile;
 
 	// Plot the bid ask percentage variation from the CSV feed
 	ijParams.szHeader = "";
