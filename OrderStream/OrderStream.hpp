@@ -1,5 +1,8 @@
 #pragma once
 
+#include "TracedException.hpp"
+#include "OrderBook.hpp"
+
 struct OBRowFeed
 {
 	string						szInstrument;
@@ -26,29 +29,36 @@ private:
 	vector<long>	m_vAsks;
 
 	// Map of <price, <row,size>>
-	multimap<long, pairSizeRow>	mapBidFeed;
-	multimap<long, pairSizeRow>	mapAskFeed;
+	multimap<long, pairSizeRow>	m_mapBidFeed;
+	multimap<long, pairSizeRow>	m_mapAskFeed;
 
 protected:
 	vector<OBRowFeed>				m_vobrf;
 	boost::shared_ptr<OrderBook>	m_pOrderBook;
 
+	// Trace any exception that might occur
+	ErrorExceptionInfo m_eei;
+
 public:
 	OBStream(const string& szFile, const int& nMaxBookLevels, const int& nMaxBookDepth);
 
-	const string& getSourceFile() const			{ return m_szFile; }
+	const string& getSourceFile() const					{ return m_szFile; }
 
-	const OBRowFeed& getRowFeedAt(int i)		{ return m_vobrf.at(i); }
-	int getNumRows() const						{ return m_vobrf.size(); }
+	const OBRowFeed& getRowFeedAt(int i)				{ return m_vobrf.at(i); }
+	int getNumRows() const								{ return m_vobrf.size(); }
 
-	operator boost::shared_ptr<OrderBook>()		{ return m_pOrderBook; }
-	boost::shared_ptr<OrderBook> getOrderBook()	{ return m_pOrderBook; }
-
-	virtual void processFeeds() = 0;
+	operator boost::shared_ptr<OrderBook>()				{ return m_pOrderBook; }
+	boost::shared_ptr<OrderBook> getOrderBook()			{ return m_pOrderBook; }
+	const bool IsCaughtException() const				{ return !m_eei.szDesc.empty(); }
+	void setExceptionInfo(const TracedException& te)	{ m_eei = te.getExceptionInfo(); }
 
 	void buildOrderBook();
 	void addPriceSizeLevels(vector<pairPriceSize>& vp, const string& szLevel, const regex& re);
-	//void buildIndexSizeChange(mapRowSize& mrs, vector<int>& vs);
+
+	
+	virtual void processFeeds() = 0;
+	virtual const string getObjectName() const = 0;
+	virtual void CheckNotifyException() const;
 
 private:
 	//void buildWall(const priceSet& ps, const mapLevels& ml, mapBook& mPrice, mapBook& mSize);
@@ -56,6 +66,8 @@ private:
 	void buildOffers();
 	void buildOfferLast();
 	void setVariation();	// Set bid and ask price variations
+
+	static constexpr auto SZ_OBSTREAM_EXCEPTION	= "OBStream Exception";
 };
 
 class OBStreamCSV : public OBStream {
@@ -64,6 +76,7 @@ public:
 	OBStreamCSV(const string& szFile, int& nMaxBookLevels, int& nMaxBookDepth) : OBStream(szFile, nMaxBookLevels, nMaxBookDepth) {}
 
 	void processFeeds();
+	const string getObjectName() const { return "OBStreamCSV"; }
 
 	enum CSVFEED_ROW_ID {	
 		CSVFEED_INSTRUMENT=0, 
@@ -79,6 +92,9 @@ public:
 		CSVFEED_BID_SIZE, 
 		CSVFEED_BID_LEVELS, 
 		CSVFEED_ASK_LEVELS };
+
+private:
+	static constexpr auto SZ_OBSTREAMCSV_EXCEPTION = "OBStreamCSV Exception";
 };
 
 class OBStreamLog : public OBStream {
@@ -87,6 +103,7 @@ public:
 	OBStreamLog(const string& szFile, int& nMaxBookLevels, int& nMaxBookDepth) : OBStream(szFile, nMaxBookLevels, nMaxBookDepth) {}
 
 	void processFeeds();
+	const string getObjectName() const { return "OBStreamLog"; }
 
 	enum LOGFEED_ROW_ID {
 		LOGFEED_INSTRUMENT = 0,
@@ -97,6 +114,9 @@ public:
 		LOGFEED_BID_BOOK,
 		LOGFEED_ASK_BOOK
 	};
+
+private:
+	static constexpr auto SZ_OBSTREAMLOG_EXCEPTION = "OBStreamLog Exception";
 };
 
 
